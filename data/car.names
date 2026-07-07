@@ -1,0 +1,33 @@
+﻿Citation Request:
+    Bohanec, M. (1988). Car Evaluation [Dataset]. UCI Machine Learning
+    Repository. https://doi.org/10.24432/C5JP48
+
+1. Title: Car Evaluation Database
+
+2. Sources:
+   (a) Creator: Marko Bohanec
+   (b) Donors: Marko Bohanec, Blaz Zupan
+   (c) Date: June, 1997
+
+3. Number of Instances: 1728
+   (instances completely cover the attribute space)
+
+4. Number of Attributes: 6
+
+5. Attribute Values (input attributes):
+   buying:   vhigh, high, med, low.
+   maint:    vhigh, high, med, low.
+   doors:    2, 3, 4, 5more.
+   persons:  2, 4, more.
+   lug_boot: small, med, big.
+   safety:   low, med, high.
+
+6. Class Distribution (output attribute - class):
+   class      N          N[%]
+   -----------------------------
+   unacc     1210     (70.023 %)
+   acc        384     (22.222 %)
+   good        69     ( 3.993 %)
+   vgood       65     ( 3.762 %)
+
+7. Missing Attribute Values: none
