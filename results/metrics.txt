@@ -1,0 +1,13 @@
+Acurácia geral: 0.8574
+
+Relatório de classificação (por classe):
+              precision    recall  f1-score   support
+
+         acc       0.68      0.68      0.68       115
+        good       0.67      0.38      0.48        21
+       unacc       0.91      0.96      0.94       363
+       vgood       0.90      0.45      0.60        20
+
+    accuracy                           0.86       519
+   macro avg       0.79      0.62      0.68       519
+weighted avg       0.85      0.86      0.85       519
