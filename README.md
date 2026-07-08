@@ -1,9 +1,13 @@
 ﻿# 🚗 Car Evaluation - Classificação com Naive Bayes
+## UNIVERSIDADE FEDERAL DO MARANHÃO - UFMA
+## CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA - (CCET)
 
 Projeto acadêmico de Aprendizagem de Máquina (UFMA) que aplica o algoritmo **Naive Bayes** (variante `CategoricalNB`) para prever a aceitabilidade de veículos, utilizando a base de dados **Car Evaluation** do repositório UCI Machine Learning.
 
+**Docente:** Dr. Alex OLiveira
 **Discentes:** Antonio Claudino e Daniel Lindoso
-**Disciplina:** Aprendizagem de Máquina — UFMA
+**Curso:** Engenharia da Comupaão
+**Disciplina:** Inteligência Artificial 
 
 ---
 
@@ -15,25 +19,30 @@ O projeto foi construído seguindo o fluxo completo de um pipeline real de Machi
 
 ---
 
-## 📁 Estrutura do projetocar-evaluation-naive-bayes/
+## 📁 Estrutura do projeto
+---
+
+```text
+car-evaluation-naive-bayes/
 │
 ├── data/
-│   ├── car.data          # Base de dados original (1728 instâncias)
-│   └── car.names          # Documentação dos atributos
+│   ├── car.data         # Base de dados original (1728 instâncias)
+│   └── car.names        # Documentação dos atributos
 │
 ├── src/
-│   ├── data_loader.py     # Carregamento e resumo inicial da base
-│   ├── eda.py              # Análise exploratória (gráficos)
-│   ├── preprocessing.py    # Encoding ordinal + split treino/teste
-│   ├── model.py             # Treinamento do CategoricalNB
-│   ├── evaluation.py        # Métricas e matriz de confusão
-│   └── main.py               # Executa o pipeline completo
+│   ├── data_loader.py   # Carregamento e resumo inicial da base
+│   ├── eda.py           # Análise exploratória (gráficos)
+│   ├── preprocessing.py # Encoding ordinal + split treino/teste
+│   ├── model.py         # Treinamento do CategoricalNB
+│   ├── evaluation.py    # Métricas e matriz de confusão
+│   └── main.py          # Executa o pipeline completo
 │
-├── images/                  # Gráficos gerados pelo projeto
-├── results/                  # Métricas salvas em texto
+├── images/              # Gráficos gerados pelo projeto
+├── results/             # Métricas salvas em texto
 ├── requirements.txt
-└── README.md---
-
+└── README.md
+```
+---
 ## ⚙️ Como rodar o projeto
 
 **1. Clone o repositório:**

@@ -1,8 +1,10 @@
 ﻿"""
 Módulo de avaliação do modelo Naive Bayes.
 
-Aqui a gente testa o modelo já treinado contra os dados de teste
-(que ele nunca viu antes) e calcula as métricas de desempenho:
+Chegou a hora da verdade: depois de treinar o modelo, precisamos saber
+se ele realmente aprendeu alguma coisa útil ou só "decorou" os dados de
+treino. Pra isso, testamos ele contra os dados de teste (que ele nunca
+viu antes) e calculamos as métricas que mostram o desempenho de verdade:
 Acurácia, Precisão, Recall, F1-Score e a Matriz de Confusão.
 """
 
@@ -23,19 +25,21 @@ IMAGES_PATH = os.path.join(BASE_DIR, "images")
 
 def evaluate_model(model, X_test, y_test):
     """
-    Faz as previsões no conjunto de teste e calcula as principais
-    métricas de desempenho do modelo.
+    Pede pro modelo prever as classes do conjunto de teste e depois
+    compara essas previsões com as classes reais, calculando as
+    principais métricas de desempenho.
 
     Args:
-        model: modelo já treinado (CategoricalNB).
+        model: o modelo já treinado (CategoricalNB).
         X_test: atributos do conjunto de teste.
         y_test: classes reais do conjunto de teste.
 
     Returns:
         Uma tupla (y_pred, accuracy, report), onde:
-        - y_pred: as previsões que o modelo fez para o conjunto de teste;
-        - accuracy: a acurácia geral (um número entre 0 e 1);
-        - report: um texto com Precisão, Recall e F1 detalhados por classe.
+        - y_pred: o que o modelo previu para cada carro do teste;
+        - accuracy: a acurácia geral, um número entre 0 e 1;
+        - report: um texto pronto com Precisão, Recall e F1
+          detalhados, classe por classe.
     """
     y_pred = model.predict(X_test)
 
@@ -47,14 +51,18 @@ def evaluate_model(model, X_test, y_test):
 
 def plot_confusion_matrix(y_test, y_pred, labels):
     """
-    Gera e salva a imagem da matriz de confusão, mostrando visualmente
-    onde o modelo acertou (diagonal principal) e onde ele confundiu
-    uma classe com outra.
+    Monta e salva a imagem da matriz de confusão - uma tabela visual
+    que mostra onde o modelo acertou (na diagonal principal) e, mais
+    importante, onde ele errou e com qual classe confundiu.
+
+    É um dos gráficos mais úteis pra entender o comportamento do
+    modelo, porque a acurácia sozinha não conta essa história toda.
 
     Args:
         y_test: classes reais do conjunto de teste.
-        y_pred: classes previstas pelo modelo.
-        labels: lista com o nome das classes, na ordem que queremos exibir.
+        y_pred: classes que o modelo previu.
+        labels: lista com o nome das classes, na ordem que queremos
+            que apareçam no gráfico.
     """
     matrix = confusion_matrix(y_test, y_pred, labels=labels)
 
@@ -78,13 +86,14 @@ def plot_confusion_matrix(y_test, y_pred, labels):
 
 def save_metrics_to_file(accuracy, report):
     """
-    Salva a acurácia e o relatório de métricas em um arquivo de texto,
-    dentro da pasta results/, para consulta posterior (e para colar
-    no relatório final).
+    Guarda a acurácia e o relatório completo de métricas num arquivo
+    de texto dentro de results/, pra gente poder consultar depois sem
+    precisar rodar o código de novo (e pra facilitar na hora de colar
+    esses números no relatório ou nos slides).
 
     Args:
-        accuracy: acurácia geral do modelo.
-        report: texto do classification_report.
+        accuracy: a acurácia geral do modelo.
+        report: o texto gerado pelo classification_report.
     """
     caminho = os.path.join(RESULTS_PATH, "metrics.txt")
 
@@ -96,8 +105,9 @@ def save_metrics_to_file(accuracy, report):
     print(f"Métricas salvas em: {caminho}")
 
 
-# Permite rodar este arquivo isoladamente, encadeando todo o pipeline
-# (carregar -> pré-processar -> treinar -> avaliar) de uma vez só
+# Esse bloco permite rodar este arquivo sozinho, encadeando o
+# pipeline inteiro (carregar -> pré-processar -> treinar -> avaliar)
+# de uma vez só, sem precisar passar pelo main.py.
 if __name__ == "__main__":
     from data_loader import load_car_evaluation_data
     from preprocessing import (
@@ -124,8 +134,8 @@ if __name__ == "__main__":
     print("Relatório de classificação (por classe):")
     print(report)
 
-    # Ordem fixa das classes, para a matriz de confusão sempre
-    # aparecer organizada da mesma forma
+    # Ordem fixa das classes, pra matriz de confusão sempre
+    # aparecer organizada do mesmo jeito toda vez que rodarmos
     labels_ordenadas = ["unacc", "acc", "good", "vgood"]
     plot_confusion_matrix(y_test, y_pred, labels_ordenadas)
 

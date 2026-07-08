@@ -1,10 +1,11 @@
 ﻿"""
 Módulo de Análise Exploratória de Dados (EDA) da base Car Evaluation.
 
-A ideia aqui é simples: antes de treinar qualquer modelo, é importante
-"conhecer" os dados de verdade. Este módulo gera gráficos que mostram
-como as classes estão distribuídas e como cada atributo se comporta,
-salvando as imagens na pasta images/ para usarmos no relatório e nos slides.
+Antes de sair treinando qualquer modelo, vale a pena parar e "olhar"
+pros dados de verdade - ver como as classes estão distribuídas, se
+algum atributo chama atenção, se dá pra perceber algum padrão a olho
+nu. É isso que esse módulo faz: gera gráficos e salva tudo na pasta
+images/, prontos pra usar no relatório e nos slides da apresentação.
 """
 
 import os
@@ -14,23 +15,27 @@ import seaborn as sns
 from data_loader import load_car_evaluation_data
 
 
-# Mesma lógica do data_loader.py: descobrir a raiz do projeto a partir
-# da localização deste arquivo, para que o caminho funcione sempre,
-# não importa de onde o script seja executado.
+# Mesma ideia do data_loader.py: descobrir a raiz do projeto a partir
+# de onde este arquivo está, pra garantir que o caminho das imagens
+# funcione sempre, não importa de qual pasta a gente rode o script.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMAGES_PATH = os.path.join(BASE_DIR, "images")
 
-# Lista com os 6 atributos preditores (sem contar a coluna "class")
+# Os 6 atributos que descrevem o carro (deixamos de fora a coluna
+# "class", já que essa é a resposta, não uma pergunta/atributo)
 FEATURE_COLUMNS = ["buying", "maint", "doors", "persons", "lug_boot", "safety"]
 
 
 def plot_class_distribution(df):
     """
-    Gera um gráfico de barras mostrando quantos carros existem
-    em cada categoria de aceitabilidade (unacc, acc, good, vgood).
+    Mostra, num gráfico de barras, quantos carros existem em cada
+    categoria de aceitabilidade (unacc, acc, good, vgood).
 
-    Esse gráfico é importante porque mostra logo de cara que a base
-    é desbalanceada: a maioria dos carros é "unacc".
+    Esse é provavelmente o gráfico mais importante da EDA: ele deixa
+    bem claro, só de olhar, que a base é desbalanceada - a grande
+    maioria dos carros cai em "unacc", enquanto "good" e "vgood"
+    aparecem bem menos. Isso vai explicar boa parte do comportamento
+    do modelo mais pra frente.
     """
     plt.figure(figsize=(6, 4))
     sns.countplot(data=df, x="class", order=df["class"].value_counts().index)
@@ -45,8 +50,14 @@ def plot_class_distribution(df):
 
 def plot_feature_frequencies(df):
     """
-    Gera um gráfico de barras para cada um dos 6 atributos preditores,
-    mostrando quantas vezes cada categoria aparece na base.
+    Gera um gráfico de barras pra cada um dos 6 atributos do carro,
+    mostrando quantas vezes cada categoria aparece na base (por
+    exemplo, quantos carros têm "buying = low", quantos têm "high",
+    e assim por diante).
+
+    Diferente da distribuição das classes, aqui a expectativa é ver
+    os atributos bem mais equilibrados entre si - já que a base foi
+    montada cobrindo todas as combinações possíveis de valores.
     """
     fig, axes = plt.subplots(2, 3, figsize=(14, 8))
     axes = axes.flatten()
@@ -65,9 +76,15 @@ def plot_feature_frequencies(df):
 
 def plot_class_by_safety(df):
     """
-    Gera um gráfico cruzando o atributo 'safety' com a classe final,
-    para ver se existe alguma relação visual entre segurança e
+    Cruza o atributo "safety" com a classe final, pra ver se dá pra
+    enxergar visualmente alguma relação entre segurança e
     aceitabilidade do carro.
+
+    A intuição por trás disso é que segurança provavelmente pesa
+    bastante na decisão - um carro inseguro dificilmente seria
+    considerado "bom", não importa o resto dos atributos. Esse
+    gráfico ajuda a confirmar (ou não) essa intuição antes mesmo
+    de treinar qualquer modelo.
     """
     plt.figure(figsize=(7, 5))
     sns.countplot(data=df, x="safety", hue="class")
@@ -81,7 +98,10 @@ def plot_class_by_safety(df):
     print("Gráfico salvo: safety_vs_class.png")
 
 
-# Permite rodar este arquivo isoladamente para gerar todos os gráficos de uma vez
+# Esse bloco só roda quando executamos este arquivo diretamente
+# (ex: "python src/eda.py"), gerando os três gráficos de uma vez.
+# Assim, se quisermos só atualizar as imagens sem rodar o pipeline
+# inteiro de novo, basta rodar este arquivo sozinho.
 if __name__ == "__main__":
     dataset = load_car_evaluation_data()
 
